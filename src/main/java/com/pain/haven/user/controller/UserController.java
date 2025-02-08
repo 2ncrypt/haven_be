@@ -1,6 +1,5 @@
 package com.pain.haven.user.controller;
 
-import com.pain.haven.user.domain.user.User;
 import com.pain.haven.user.domain.user.UserDto;
 import com.pain.haven.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
