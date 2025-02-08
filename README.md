@@ -1,2 +1,1 @@
-# haven_be
-# haven_be
+mkdir -p board/{controller,service,repository,exception,domain}
