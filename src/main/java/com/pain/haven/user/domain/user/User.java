@@ -15,9 +15,11 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // 자동 증가 (PostgreSQL에서 SERIAL 역할)
-    @Column(name = "user_id")
-    private Long userId;  // 기본 키 (Long 타입)
+    @Column(name = "id", unique = true, nullable = false, length = 20)
+    private String id; // "U0000000001" 같은 패턴의 자동 증가 ID
+
+    @Column(name = "user_id", unique = true, nullable = false, length = 20)
+    private String userId;  // 사용자 ID
 
     @Column(name = "password", nullable = false)
     private String password;  // 비밀번호
@@ -29,7 +31,7 @@ public class User {
     private String email;  // 이메일 (유니크)
 
     @Column(name = "phone_number", nullable = false, length = 20)
-    private String phoneNumber;  // 전화번호 (앞자리 0 유지)
+    private String phoneNumber;  // 전화번호
 
     @Column(name = "sns_code", nullable = false)
     private Integer snsCode;  // SNS 연동 코드 (00 없음, 01 카카오, 02 구글, 03 미정)

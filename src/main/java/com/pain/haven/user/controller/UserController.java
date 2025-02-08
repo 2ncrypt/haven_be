@@ -1,8 +1,10 @@
 package com.pain.haven.user.controller;
 
 import com.pain.haven.user.domain.user.User;
+import com.pain.haven.user.domain.user.UserDto;
 import com.pain.haven.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +16,12 @@ public class UserController {
     @Autowired  // 생성자 주입 명시적 설정
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    // 회원가입
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(userService.registerUser(userDto));
     }
 
     @GetMapping("/exists/id/{userId}")
@@ -28,9 +36,4 @@ public class UserController {
         return userService.checkUserEmailExists(email);
     }
 
-    @PostMapping("/signup")
-    public User signUp(@RequestBody User user) {
-        System.out.println("User sign-up: " + user);
-        return userService.registerUser(user);
-    }
 }
