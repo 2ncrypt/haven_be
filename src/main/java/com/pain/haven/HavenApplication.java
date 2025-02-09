@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class HavenApplication {
     static {
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = Dotenv.configure().directory("/home/hyunsu/haven").load();
         System.setProperty("DB_HOST", dotenv.get("DB_HOST"));
         System.setProperty("DB_PORT", dotenv.get("DB_PORT"));
         System.setProperty("DB_NAME", dotenv.get("DB_NAME"));
