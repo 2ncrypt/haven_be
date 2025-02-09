@@ -2,34 +2,40 @@ pipeline {
     agent any
 
     environment {
-        JAVA_HOME = '/usr/lib/jvm/java-8-openjdk-amd64'
-        PATH = "${JAVA_HOME}/bin:${env.PATH}"
+        JAVA_HOME = '/usr/lib/jvm/java-8-openjdk-amd64'  // Java 1.8 환경 변수 설정
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"  // PATH에 JAVA_HOME/bin 추가
     }
 
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    // Git에서 소스 코드 가져오기
-                    checkout scm
-                }
+                checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                script {
-                    // Maven 빌드 실행 (빌드 후 .jar 파일 생성)
-                    sh 'mvn clean package -DskipTests'
-                }
+                sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('Run') {
             steps {
                 script {
-                    // 서버 실행 (포트 9090으로 실행)
-                    sh 'nohup java -jar target/haven-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod --server.port=9090 > logs.txt 2>&1 &'
+                    echo "🔄 기존 애플리케이션 종료..."
+                    // 9090 포트를 사용하는 프로세스 종료
+                    sh 'fuser -k 9090/tcp || true'
+
+                    echo "🚀 새로운 애플리케이션 실행 (포트: 9090)"
+                    // JDK 1.8로 서버 실행
+                    sh 'nohup ${JAVA_HOME}/bin/java -jar target/haven-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod --server.port=9090 > logs.txt 2>&1 &'
+
+                    echo "⏳ 서버 시작 대기..."
+                    sleep 5
+
+                    // 서버 상태 확인
+                    echo "🔍 서버 상태 확인..."
+                    sh 'curl -I http://localhost:9090 || echo "Server failed to start!"'
                 }
             }
         }
@@ -37,7 +43,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // 서버가 실행되는지 확인
+                    // curl로 서버가 실행되는지 확인
                     sh 'curl -I http://localhost:9090 || echo "Server failed to start!"'
                 }
             }
@@ -46,7 +52,6 @@ pipeline {
 
     post {
         always {
-            // 항상 실행할 부분 (로그 확인, 정리 등)
             echo "Cleaning up..."
             cleanWs()
         }
