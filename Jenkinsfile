@@ -1,9 +1,7 @@
 pipeline {
     agent any
-
-    environment {
-        JAVA_HOME = '/usr/lib/jvm/java-8-openjdk-amd64'  // Java 1.8 환경 변수 설정
-        PATH = "${JAVA_HOME}/bin:${env.PATH}"  // PATH에 JAVA_HOME/bin 추가
+    tools {
+        jdk 'JDK8'
     }
 
     stages {
