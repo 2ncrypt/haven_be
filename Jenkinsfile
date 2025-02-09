@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        JAVA_HOME = tool name: 'JDK 1.8', type: 'JDK'
+        JAVA_HOME = '/usr/lib/jvm/java-8-openjdk-amd64'
         PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
 
