@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class HavenApplication {
     static {
-//        Dotenv dotenv = Dotenv.configure().directory("/home/hyunsu/haven").load()
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = Dotenv.configure().directory("/var/lib/jenkins").load();
+//        Dotenv dotenv = Dotenv.load();
         System.setProperty("DB_HOST", dotenv.get("DB_HOST"));
         System.setProperty("DB_PORT", dotenv.get("DB_PORT"));
         System.setProperty("DB_NAME", dotenv.get("DB_NAME"));
