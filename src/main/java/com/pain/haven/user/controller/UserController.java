@@ -2,6 +2,7 @@ package com.pain.haven.user.controller;
 
 import com.pain.haven.user.domain.user.UserDto;
 import com.pain.haven.user.service.UserService;
+import com.pain.haven.utils.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
     @Autowired  // 생성자 주입 명시적 설정
-    public UserController(UserService userService) {
+    public UserController(UserService userService, EmailService emailService) {
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     // 회원가입
@@ -32,7 +35,9 @@ public class UserController {
     @GetMapping("/exists/email/{email}")
     public boolean checkUserEmailExists(@PathVariable String email) {
         System.out.println("Checking email exists: " + email);
+
         return userService.checkUserEmailExists(email);
     }
+
 
 }
