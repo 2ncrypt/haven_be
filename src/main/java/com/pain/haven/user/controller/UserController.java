@@ -1,11 +1,14 @@
 package com.pain.haven.user.controller;
 
-import com.pain.haven.user.domain.user.UserDto;
+import com.pain.haven.user.domain.user.UsersDTO;
 import com.pain.haven.user.service.UserService;
 import com.pain.haven.utils.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -19,24 +22,24 @@ public class UserController {
         this.userService = userService;
         this.emailService = emailService;
     }
-
-    // 회원가입
-    @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userService.registerUser(userDto));
-    }
-
+    // 아이디 중복 검사
     @GetMapping("/exists/id/{userId}")
     public boolean checkUserIdExists(@PathVariable String userId) {
         System.out.println("Checking user ID exists: " + userId);
         return userService.checkUserIdExists(userId);
     }
-
+    //이메일 중복 검사
     @GetMapping("/exists/email/{email}")
     public boolean checkUserEmailExists(@PathVariable String email) {
         System.out.println("Checking email exists: " + email);
 
         return userService.checkUserEmailExists(email);
+    }
+    // 회원가입
+    @PostMapping("/register")
+    public Map<String , Object> registerUser(@RequestBody UsersDTO usersDTO) {
+        Map<String , Object> result = new HashMap<>();
+        return result;
     }
 
 

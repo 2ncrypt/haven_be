@@ -24,5 +24,6 @@ BE RestApi 완료
 
 .env 보안 사항 업데이트 완료
 
+ERD 작성 https://www.erdcloud.com/d/pAXHbHzLgXxQ9XGFY
 ### 향후진행 내용
 백엔드 개발 후 Flutter로 간단한 앱디자인을 하여 테스트 앱 개발 예정 
